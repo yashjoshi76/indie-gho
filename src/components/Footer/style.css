@@ -1,0 +1,33 @@
+.footer {
+	height: 100px;
+	width: 100%;
+	margin-top: 50px;
+	position: sticky;
+	background-color: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: white;
+}
+.footer-text {
+	font-size: 20px;
+	
+}
+
+.footer-header {
+	width: 100%;
+	padding: 50px;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+@media only screen and (max-width: 600px) {
+	.footer {
+		height: 100px;
+		margin-top: 20px;
+	}
+	.footer-text {
+		font-size: 15px;
+	}
+}

@@ -1,0 +1,38 @@
+.sim-layout {
+	display: flex;
+	flex-direction: row;
+}
+.similar-arts {
+	margin-top: 50px;
+	width: 70%;
+}
+
+.groove-img {
+	height: 400px;
+}
+
+.similar-arts-text {
+	font-size: 25px;
+	text-align: center;
+	margin: 0px 0px 25px;
+}
+.similar-arts-carousel {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 300px;
+	margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+
+	.sim-layout{
+		flex-direction: column;
+	}
+	.similar-arts {
+		width: 100%;
+	}
+	.groove-img {
+		height: 400px;
+		width: 100%;
+	}
+}

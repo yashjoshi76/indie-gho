@@ -1,0 +1,14 @@
+.playlist {
+	margin-top: 50px;
+}
+.discover-text {
+	font-size: 25px;
+	text-align: center;
+	margin: 0px 0px 25px;
+}
+.playlist-carousel {
+	overflow-x: hidden;
+	overflow-y: scroll;
+	height: 300px;
+	margin: 0 auto;
+}

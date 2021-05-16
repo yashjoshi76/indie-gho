@@ -1,0 +1,33 @@
+.navbar {
+	height: 70px;
+	width: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	position: sticky;
+	background-color: black;
+	display: flex;
+	flex-direction: row;
+	color: white;
+}
+
+.doti {
+	font-weight: bold;
+    font-family: sans-serif;
+}
+
+.logo {
+	display: flex;
+	flex-direction: row;
+}
+.text {
+	font-size: 20px;
+	text-transform: uppercase;
+}
+
+.header {
+	width: 100%;
+	padding: 25px;
+	height: 100%;
+	display: flex;
+	justify-content: space-between;
+}
