@@ -4,7 +4,7 @@ import { config } from "react-spring";
 
 import "./style.css";
 
-export const Playlists = () => {
+export const Playlists = (plists) => {
 	const [state, setState] = useState({
 		goToSlide: 0,
 		offsetRadius: 2,

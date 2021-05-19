@@ -2,13 +2,19 @@
 	margin-top: 50px;
 }
 .discover-text {
-	font-size: 25px;
+	font-size: 40px;
 	text-align: center;
 	margin: 0px 0px 25px;
 }
 .playlist-carousel {
 	overflow-x: hidden;
 	overflow-y: scroll;
-	height: 300px;
+	height: 500px;
 	margin: 0 auto;
+}
+
+@media only screen and (max-width: 600px) {
+	.playlist-carousel {
+		height: 310px;
+	}
 }

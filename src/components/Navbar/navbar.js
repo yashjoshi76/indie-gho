@@ -12,7 +12,7 @@ export const Navbar = () => {
 			<div>
 				<div className="logo">
 					<div className="header text">
-						<span className="doti">DOTI</span>
+						<span className="doti">doti</span>
 						<div>
 							<img alt="owl" src={Ghost} />
 						</div>{" "}

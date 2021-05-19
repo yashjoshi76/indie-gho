@@ -5,13 +5,15 @@ import { config } from "react-spring";
 import Groove from "../../images/groove.svg";
 import "./style.css";
 
-export const SimilarArts = () => {
+export const SimilarArts = (artists) => {
 	const [state, setState] = useState({
 		goToSlide: 0,
 		offsetRadius: 2,
 		showNavigation: true,
 		config: config.gentle,
 	});
+
+	
 
 	let slides = [
 		{
