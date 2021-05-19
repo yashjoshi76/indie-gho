@@ -8,19 +8,19 @@ import { Doti } from "../Doti/doti";
 
 import "./style.css";
 
-export const About = (artist, plists) => {
-	if (!artist) {
+export const About = (data) => {
+	if (!data) {
 		return <div></div>;
 	} else {
-		const { recom } = artist;
-		console.log(plists);
+		const { list } = data;
+		console.log(list);
 
 		return (
 			<div>
 				<Navbar />
 				<div className="about">
-					<Artist data={recom} />
-					<Playlists />
+					{/* <Artist art={recom} /> */}
+					<Playlists list={list} /> 
 					<Doti />
 					<SimilarArts />
 				</div>

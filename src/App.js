@@ -8,8 +8,8 @@ import "./App.css";
 function App() {
 	const spotify = Credentials();
 	const [token, setToken] = useState("");
-	const [artist, setArtists] = useState([]);
 	const [plists, setPlists] = useState([]);
+	const [artist, setArtists] = useState([]);
 
 	const [artistSongs, setArtistSongs] = useState([]);
 
@@ -21,6 +21,34 @@ function App() {
 		"https://api.spotify.com/v1/recommendations?limit=10&market=ES&seed_artists=0epOFNiUfyON9EYx7Tpr6V&seed_genres=indie"; //indie recommendations
 
 	// const albums_url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
+
+	const getPlaylists = async (token) => {
+		const playlists = await axios(c_playlist_url, {
+			method: "GET",
+			headers: {
+				Authorization: "Bearer " + token,
+			},
+		});
+
+		const playlistsData = playlists.data;
+		// console.log(playlistsData.playlists);
+		setPlists(playlistsData.playlists.items);
+		// console.log(plists);
+	};
+	const getRecomArtists = async (token) => {
+		let recomsList = await axios(recom_url, {
+			method: "GET",
+			headers: {
+				Authorization: "Bearer " + token,
+			},
+		});
+
+		const recoms = recomsList.data;
+		// console.log(resp.data.tracks[0].artists[0].id);
+
+		setArtists(recoms.tracks[0]);
+		getSongs(token, recoms.tracks[0].artists[0].id);
+	};
 
 	const getSongs = async (token, id) => {
 		// console.log(token, id);
@@ -37,34 +65,6 @@ function App() {
 		// console.log(artistSongs);
 	};
 
-	const getRecomArtists = async (token) => {
-		let recomsList = await axios(recom_url, {
-			method: "GET",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		});
-
-		const recoms = recomsList.data;
-		// console.log(resp.data.tracks[0].artists[0].id);
-
-		getSongs(token, recoms.tracks[0].artists[0].id);
-		setArtists(recoms.tracks[0]);
-	};
-
-	const getPlaylists = async (token) => {
-		const playlists = await axios(c_playlist_url, {
-			method: "GET",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		});
-
-		const playlistsData = playlists.data;
-		setPlists(playlistsData.items);
-	};
-
-
 	useEffect(() => {
 		axios("https://accounts.spotify.com/api/token", {
 			headers: {
@@ -77,14 +77,26 @@ function App() {
 		}).then((tokenResponse) => {
 			// console.log(tokenResponse.data.access_token);
 			setToken(tokenResponse.data.access_token);
-			getPlaylists(tokenResponse.data.access_token);
+			// getPlaylists(tokenResponse.data.access_token);
 			getRecomArtists(tokenResponse.data.access_token);
+
+			axios(c_playlist_url, {
+				method: "GET",
+				headers: {
+					Authorization: "Bearer " + token,
+				},
+			}).then((resp) => {
+				// console.log(resp);
+				setPlists(resp.data.playlists.items);
+			});
 		});
 	}, [spotify.ClientId, spotify.ClientSecret]);
 
+
+
 	return (
 		<div className="App">
-			<About recom={artist} list={artistSongs} />
+			<About list={plists} recom={artist} />
 		</div>
 	);
 }

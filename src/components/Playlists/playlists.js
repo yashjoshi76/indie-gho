@@ -4,7 +4,7 @@ import { config } from "react-spring";
 
 import "./style.css";
 
-export const Playlists = (plists) => {
+export const Playlists = ({ list }) => {
 	const [state, setState] = useState({
 		goToSlide: 0,
 		offsetRadius: 2,
@@ -12,36 +12,21 @@ export const Playlists = (plists) => {
 		config: config.gentle,
 	});
 
-	let slides = [
-		{
-			key: 1,
-			content: <img src="https://picsum.photos/800/801/?random" alt="1" />,
-		},
-		{
-			key: 2,
-			content: <img src="https://picsum.photos/800/802/?random" alt="2" />,
-		},
-		{
-			key: 3,
-			content: <img src="https://picsum.photos/800/803/?random" alt="3" />,
-		},
-		{
-			key: 4,
-			content: <img src="https://picsum.photos/800/804/?random" alt="4" />,
-		},
-		{
-			key: 5,
-			content: <img src="https://picsum.photos/800/805/?random" alt="4" />,
-		},
-	].map((slide, index) => {
+	// console.log(list);
+
+	let slides = list.map((obj, index) => ({
+	key: index,
+	content: (
+		<img
+			alt={index}
+			src={obj.images.map((x) => {
+				return x.url;
+			})}
+		/>
+	),
+})).map((slide, index) => {
 		return { ...slide, onClick: () => setState({ goToSlide: index }) };
 	});
-
-	const onChangeInput = (e) => {
-		setState({
-			[e.target.name]: parseInt(e.target.value, 10) || 0,
-		});
-	};
 
 	let xDown = null;
 	let yDown = null;

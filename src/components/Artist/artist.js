@@ -26,3 +26,16 @@ export const Artist = ({ data }) => {
 		);
 	}
 };
+
+
+// const slides = list.map((obj, index) => ({
+// 	key: index,
+// 	content: (
+// 		<img
+// 			alt={obj.id}
+// 			src={obj.images.map((x) => {
+// 				return x.url;
+// 			})}
+// 		/>
+// 	),
+// }));
