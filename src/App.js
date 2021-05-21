@@ -1,103 +1,21 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { Login } from "./components/Login/login";
+import { useAuth } from "./components/Login/useAuth";
 
-import { About } from "./components/About/about";
+import { Dashboard } from "./components/Dashboard/dashboard";
 import { Credentials } from "./credentials/credentials";
 import "./App.css";
 
 function App() {
-	const spotify = Credentials();
-	const [token, setToken] = useState("");
-	const [plists, setPlists] = useState([]);
-	const [artist, setArtists] = useState([]);
+	const code = new URLSearchParams(window.location.search).get("code");
+	const accessToken = useAuth(code);
 
-	const [artistSongs, setArtistSongs] = useState([]);
+	localStorage.setItem("token", accessToken);
 
-	// const category_url = "https://api.spotify.com/v1/browse/categories";
-
-	const c_playlist_url =
-		"https://api.spotify.com/v1/browse/categories/indie_alt/playlists"; //category playlists
-	const recom_url =
-		"https://api.spotify.com/v1/recommendations?limit=10&market=ES&seed_artists=0epOFNiUfyON9EYx7Tpr6V&seed_genres=indie"; //indie recommendations
-
-	// const albums_url = `https://api.spotify.com/v1/artists/${artistId}/albums`;
-
-	const getPlaylists = async (token) => {
-		const playlists = await axios(c_playlist_url, {
-			method: "GET",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		});
-
-		const playlistsData = playlists.data;
-		// console.log(playlistsData.playlists);
-		setPlists(playlistsData.playlists.items);
-		// console.log(plists);
-	};
-	const getRecomArtists = async (token) => {
-		let recomsList = await axios(recom_url, {
-			method: "GET",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		});
-
-		const recoms = recomsList.data;
-		// console.log(resp.data.tracks[0].artists[0].id);
-
-		setArtists(recoms.tracks[0]);
-		getSongs(token, recoms.tracks[0].artists[0].id);
-	};
-
-	const getSongs = async (token, id) => {
-		// console.log(token, id);
-
-		let resp = await axios(`https://api.spotify.com/v1/artists/${id}/albums`, {
-			method: "GET",
-			headers: {
-				Authorization: "Bearer " + token,
-			},
-		});
-		let albums = resp.data;
-		// console.log(albums);
-		setArtistSongs(albums);
-		// console.log(artistSongs);
-	};
-
-	useEffect(() => {
-		axios("https://accounts.spotify.com/api/token", {
-			headers: {
-				"Content-type": "application/x-www-form-urlencoded",
-				Authorization:
-					"Basic " + btoa(spotify.ClientId + ":" + spotify.ClientSecret),
-			},
-			data: "grant_type=client_credentials",
-			method: "POST",
-		}).then((tokenResponse) => {
-			// console.log(tokenResponse.data.access_token);
-			setToken(tokenResponse.data.access_token);
-			// getPlaylists(tokenResponse.data.access_token);
-			getRecomArtists(tokenResponse.data.access_token);
-
-			axios(c_playlist_url, {
-				method: "GET",
-				headers: {
-					Authorization: "Bearer " + token,
-				},
-			}).then((resp) => {
-				// console.log(resp);
-				setPlists(resp.data.playlists.items);
-			});
-		});
-	}, [spotify.ClientId, spotify.ClientSecret]);
-
-
-
-	return (
-		<div className="App">
-			<About list={plists} recom={artist} />
-		</div>
+	return accessToken? (
+		<Dashboard code={accessToken} />
+	) : (
+		<Login />
 	);
 }
 
