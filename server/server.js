@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 console.log(process.env.REDIRECT_URI);
 
-app.listen(3001, () => {
+app.listen(process.env.REDIRECT_URI, () => {
 	console.log("listening...");
 });
 
