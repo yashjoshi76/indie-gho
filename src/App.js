@@ -7,16 +7,19 @@ import { Credentials } from "./credentials/credentials";
 import "./App.css";
 
 function App() {
+	const [token, setToken] = useState();
+
+	// useEffect(() => {
+	// 	const code = new URLSearchParams(window.location.search).get("code");
+	// 	setToken(code);
+	// }, []);
+
 	const code = new URLSearchParams(window.location.search).get("code");
+
 	const accessToken = useAuth(code);
+	console.log(accessToken)
 
-	localStorage.setItem("token", accessToken);
-
-	return accessToken? (
-		<Dashboard code={accessToken} />
-	) : (
-		<Login />
-	);
+	return <Dashboard code={accessToken} />;
 }
 
 export default App;

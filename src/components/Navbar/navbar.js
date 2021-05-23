@@ -9,15 +9,21 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar">
-			<div>
-				<div className="logo">
-					<div className="header text">
-						<span className="doti">doti</span>
-						<div>
-							<img alt="owl" src={Ghost} />
-						</div>{" "}
-					</div>
+			{/* <div className="logo">
+				<div className="header text">
+					<span className="doti">doti</span>
+					<div>
+						<img alt="owl" src={Ghost} />
+					</div>{" "}
 				</div>
+			</div> */}
+
+			<div id="text">
+				{" "}
+				Get Indie-Alt Music Suggestions from DOTI{" "}
+				<div style={{ display: "contents" }}>
+					<img alt="owl" src={Ghost} />
+				</div>{" "}
 			</div>
 		</nav>
 	);

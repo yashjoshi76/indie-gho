@@ -1,0 +1,39 @@
+.main {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-rows: 1fr 1fr;
+	padding: 30px;
+}
+
+.container {
+	width: 150px;
+	height: 150px;
+	margin: 15px;
+	transform-style: flat;
+}
+
+.rec-arts {
+	overflow: hidden;
+	margin: 0;
+	/* padding: 40px; */
+	width: 50%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	perspective: 350px;
+	perspective-origin: 50% 50%;
+}
+
+.container > div {
+	position: absolute;
+	width: 150px;
+	height: 150px;
+	background: grey;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	will-change: transform;
+	cursor: pointer;
+}

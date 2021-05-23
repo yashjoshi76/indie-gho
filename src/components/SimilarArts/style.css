@@ -10,7 +10,12 @@
 .groove-img {
 	height: 400px;
 }
-
+.text-img {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
 .similar-arts-text {
 	font-size: 40px;
 	text-align: center;
@@ -24,8 +29,7 @@
 }
 
 @media only screen and (max-width: 600px) {
-
-	.sim-layout{
+	.sim-layout {
 		flex-direction: column;
 	}
 	.similar-arts {

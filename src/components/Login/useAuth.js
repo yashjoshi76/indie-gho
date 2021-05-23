@@ -8,7 +8,7 @@ export const useAuth = (code) => {
 
 	useEffect(() => {
 		axios
-			.post("http://localhost:3001/login", {
+			.post("http://localhost:3001", {
 				code,
 			})
 			.then((res) => {
@@ -16,7 +16,7 @@ export const useAuth = (code) => {
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
-				window.history.pushState({}, null, "/");
+				// window.history.pushState({}, null, "/");
 			})
 			.catch(() => {
 				// window.loaction = "/";

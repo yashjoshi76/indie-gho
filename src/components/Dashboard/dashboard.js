@@ -9,8 +9,7 @@ import { Playlists } from "../Playlists/playlists";
 import { SimilarArts } from "../SimilarArts/similararts";
 import { Footer } from "../Footer/footer";
 import { Doti } from "../Doti/doti";
-import { Login } from "../Login/login";
-import { useAuth } from "../Login/useAuth";
+
 
 //stylesheet
 import "./style.css";
@@ -22,6 +21,11 @@ const spotifyApi = new SpotifyWebApi({
 
 export const Dashboard = ({ code }) => {
 	// console.log(code);
+
+	const [artists, setArtists] = useState([]);
+	const [topArtist, setTopArtist] = useState([]);
+	const [plists, setPlists] = useState([]);
+	const [similarArts, setSimilarArts] = useState([]);
 
 	//accesstokenrefresh
 	useEffect(() => {
@@ -45,6 +49,36 @@ export const Dashboard = ({ code }) => {
 			.then(
 				function (data) {
 					let recommendations = data.body;
+					setArtists(recommendations);
+					// setTopArtist(recommendations.tracks[0].artists[0].id);
+
+					spotifyApi
+						.getArtistTopTracks(
+							`${recommendations.tracks[0].artists[0].id}`,
+							"GB"
+						)
+						.then(
+							function (data) {
+								setTopArtist(data.body.tracks);
+							},
+							function (err) {
+								console.log("Something went wrong!", err);
+							}
+						);
+					spotifyApi
+						.getArtistRelatedArtists(
+							`${recommendations.tracks[0].artists[0].id}`
+						)
+						.then(
+							function (data) {
+								// console.log("similar", data.body);
+								setSimilarArts(data.body);
+							},
+							function (err) {
+								console.log(err);
+							}
+						);
+
 					console.log(recommendations);
 				},
 				function (err) {
@@ -71,6 +105,7 @@ export const Dashboard = ({ code }) => {
 			.then(
 				function (data) {
 					console.log(data.body);
+					setPlists(data.body.playlists);
 				},
 				function (err) {
 					console.log("Something went wrong!", err);
@@ -78,12 +113,35 @@ export const Dashboard = ({ code }) => {
 			);
 	}, [code]);
 
-	return (
+	return !code ? (
+		<div
+			style={{
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center",
+			}}
+		>
+			sdsdns
+		</div>
+	) : (
 		<div>
 			<Navbar />
 			<div className="about">
-				{/* <Artist art={recom} /> */}
-				{/* <Playlists list={list} />  */}
+				{!artists ? (
+					<div
+						style={{
+							display: "flex",
+							justifyContent: "center",
+							alignItems: "center",
+						}}
+					>
+						sdnsjdns
+					</div>
+				) : (
+					<Artist art={artists} tracks={topArtist} />
+				)}
+
+				<Playlists list={plists} simList={similarArts} />
 				<Doti />
 				<SimilarArts />
 			</div>

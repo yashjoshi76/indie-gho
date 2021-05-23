@@ -13,28 +13,66 @@ export const SimilarArts = (artists) => {
 		config: config.gentle,
 	});
 
-	
-
 	let slides = [
 		{
 			key: 1,
-			content: <img src="https://picsum.photos/800/801/?random" alt="1" />,
+			content: (
+				<iframe
+					title="s"
+					width="320"
+					height="440"
+					src="https://www.instagram.com/p/CDWeOBIF7mM/embed"
+					frameborder="0"
+				/>
+			),
 		},
 		{
 			key: 2,
-			content: <img src="https://picsum.photos/800/802/?random" alt="2" />,
+			content: (
+				<iframe
+					title="a"
+					width="320"
+					height="440"
+					src="https://www.instagram.com/p/CCtkEfKFHSl/embed"
+					frameborder="0"
+				/>
+			),
 		},
 		{
 			key: 3,
-			content: <img src="https://picsum.photos/800/803/?random" alt="3" />,
+			content: (
+				<iframe
+					title="n"
+					width="320"
+					height="440"
+					src="https://https://www.instagram.com/p/CCP8ac6FlV4/embed"
+					frameborder="0"
+				/>
+			),
 		},
 		{
 			key: 4,
-			content: <img src="https://picsum.photos/800/804/?random" alt="4" />,
+			content: (
+				<iframe
+					title="y"
+					width="320"
+					height="440"
+					src="https://www.instagram.com/p/CB3A28bl_4y/embed"
+					frameborder="0"
+				/>
+			),
 		},
 		{
 			key: 5,
-			content: <img src="https://picsum.photos/800/805/?random" alt="4" />,
+			content: (
+				<iframe
+					title="u"
+					width="320"
+					height="440"
+					src="https://www.instagram.com/p/CBTSBNsFnXS/embed"
+					frameborder="0"
+				/>
+			),
 		},
 	].map((slide, index) => {
 		return { ...slide, onClick: () => setState({ goToSlide: index }) };
@@ -96,7 +134,7 @@ export const SimilarArts = (artists) => {
 	return (
 		<div className="sim-layout">
 			<div className="similar-arts">
-				<div className="similar-arts-text">Find Similar Artists</div>
+				<div className="similar-arts-text">Find Indie on Instagram</div>
 				<div
 					onTouchStart={handleTouchStart}
 					onTouchMove={handleTouchMove}

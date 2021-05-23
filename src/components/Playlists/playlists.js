@@ -1,94 +1,74 @@
 import React, { useState } from "react";
-import Carousel from "react-spring-3d-carousel";
-import { config } from "react-spring";
+import AwesomeSlider from "react-awesome-slider";
+import AwesomeSliderStyles from "react-awesome-slider/src/styles";
+import withAutoplay from "react-awesome-slider/dist/autoplay";
+import "react-awesome-slider/dist/custom-animations/cube-animation.css";
 
+import { Recarts } from "../RecArts/recarts";
 import "./style.css";
 
-export const Playlists = ({ list }) => {
-	const [state, setState] = useState({
-		goToSlide: 0,
-		offsetRadius: 2,
-		showNavigation: true,
-		config: config.gentle,
-	});
+const AutoplaySlider = withAutoplay(AwesomeSlider);
 
-	// console.log(list);
+export const Playlists = ({ list, simList }) => {
+	if (list.length === 0) {
+		return null;
+	}
 
-	let slides = list.map((obj, index) => ({
-	key: index,
-	content: (
-		<img
-			alt={index}
-			src={obj.images.map((x) => {
-				return x.url;
-			})}
-		/>
-	),
-})).map((slide, index) => {
-		return { ...slide, onClick: () => setState({ goToSlide: index }) };
-	});
+	const { items } = list;
+	const { artists } = simList;
+	console.log(artists);
+	// console.log(items);
 
-	let xDown = null;
-	let yDown = null;
+	// let slides = items.map((obj, index) => ({
+	// 	key: index,
+	// 	content: (
+	// 		<img
+	// 			alt={index}
+	// 			src={obj.images.map((x) => {
+	// 				return x.url;
+	// 			})}
+	// 		/>
+	// 	),
+	// }));
 
-	const getTouches = (evt) => {
-		return (
-			evt.touches || evt.originalEvent.touches // browser API
-		); // jQuery
-	};
-
-	const handleTouchStart = (evt) => {
-		const firstTouch = getTouches(evt)[0];
-		xDown = firstTouch.clientX;
-		yDown = firstTouch.clientY;
-	};
-
-	const handleTouchMove = (evt) => {
-		if (!xDown || !yDown) {
-			return;
-		}
-
-		let xUp = evt.touches[0].clientX;
-		let yUp = evt.touches[0].clientY;
-
-		let xDiff = xDown - xUp;
-		let yDiff = yDown - yUp;
-
-		if (Math.abs(xDiff) > Math.abs(yDiff)) {
-			/*most significant*/
-			if (xDiff > 0) {
-				/* left swipe */
-				setState({ goToSlide: state.goToSlide + 1 });
-			} else {
-				/* right swipe */
-				setState({ goToSlide: state.goToSlide - 1 });
-			}
-		} else {
-			if (yDiff > 0) {
-				/* up swipe */
-			} else {
-				/* down swipe */
-			}
-		}
-		/* reset values */
-		xDown = null;
-		yDown = null;
+	const openSpotify = (url) => {
+		window.open(url, "_blank");
 	};
 
 	return (
 		<div className="playlist">
-			<div className="discover-text">Discover Playlists</div>
+			<div className="discover-text">
+				Discover Playlists And Similar Artists
+			</div>
 			<div
-				onTouchStart={handleTouchStart}
-				onTouchMove={handleTouchMove}
-				className="playlist-carousel"
+				style={{
+					display: "flex",
+					justifyContent: "space-around",
+				}}
 			>
-				<Carousel
-					slides={slides}
-					goToSlide={state.goToSlide}
-					offsetRadius={state.offsetRadius}
-					animationConfig={state.config}
-				/>
+				<AutoplaySlider
+					cssModule={AwesomeSliderStyles}
+					animation="openAnimation"
+					play={true}
+				>
+					{items.slice(0, 15).map((x) => {
+						return (
+							<div
+								onClick={(e) => openSpotify(x.external_urls.spotify)}
+								style={{
+									objectFit: "cover",
+									backgroundImage: `url(${x.images[0].url})`,
+									backgroundSize: "contain",
+									borderRadius: "15px",
+									cursor: "pointer",
+									backgroundPosition: "center",
+									backgroundRepeat: "no-repeat",
+								}}
+							></div>
+						);
+					})}
+				</AutoplaySlider>
+				<Recarts list={artists} />
 			</div>
 		</div>
 	);
