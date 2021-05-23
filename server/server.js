@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require('path');
 const express = require("express");
 const cors = require("cors");
 const SpotifyWebApi = require("spotify-web-api-node");
@@ -10,9 +11,15 @@ app.use(express.urlencoded({ extended: true }));
 
 console.log(process.env.REDIRECT_URI);
 
+
 app.listen(3001, () => {
 	console.log("listening...");
 });
+
+app.use(express.static(path.join(__dirname, 'build')));
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  });
 
 app.post("/refresh", (req, res) => {
 	const refreshToken = req.body.refreshToken;
