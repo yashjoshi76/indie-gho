@@ -17,7 +17,7 @@ function App() {
 	const code = new URLSearchParams(window.location.search).get("code");
 
 	const accessToken = useAuth(code);
-	console.log(accessToken)
+	console.log(accessToken);
 
 	return <Dashboard code={accessToken} />;
 }

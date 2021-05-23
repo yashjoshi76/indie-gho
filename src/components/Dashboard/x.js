@@ -122,7 +122,7 @@ export const Dashboard = ({ code }) => {
 				alignItems: "center",
 			}}
 		>
-            sdsdns
+			sdsdns
 		</div>
 	) : (
 		<div>
@@ -136,7 +136,7 @@ export const Dashboard = ({ code }) => {
 							alignItems: "center",
 						}}
 					>
-					sdnsjdns
+						sdnsjdns
 					</div>
 				) : (
 					<Artist art={artists} tracks={topArtist} />
