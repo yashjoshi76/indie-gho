@@ -9,7 +9,8 @@ import { Playlists } from "../Playlists/playlists";
 import { SimilarArts } from "../SimilarArts/similararts";
 import { Footer } from "../Footer/footer";
 import { Doti } from "../Doti/doti";
-
+import { Login } from "../Login/login";
+import { useAuth } from "../Login/useAuth";
 
 //stylesheet
 import "./style.css";
@@ -40,9 +41,6 @@ export const Dashboard = ({ code }) => {
 				min_energy: 0.4,
 				seed_artists: [
 					"5INjqkS1o8h1imAzPqGZBb",
-					"0epOFNiUfyON9EYx7Tpr6V",
-					"7Ln80lUS6He07XvHI8qqHH",
-					"2Z7UcsdweVlRbAk5wH5fsf",
 				],
 				min_popularity: 50,
 			})
@@ -86,14 +84,6 @@ export const Dashboard = ({ code }) => {
 				}
 			);
 		//userdetails
-		spotifyApi.getMe().then(
-			function (data) {
-				console.log("Some information about the authenticated user", data.body);
-			},
-			function (err) {
-				console.log("Something went wrong!", err);
-			}
-		);
 
 		//popular playlists in ireland
 		spotifyApi
@@ -143,7 +133,7 @@ export const Dashboard = ({ code }) => {
 
 				<Playlists list={plists} simList={similarArts} />
 				<Doti />
-				<SimilarArts />
+				{/* <SimilarArts /> */}
 			</div>
 			<Footer />
 		</div>
