@@ -7,16 +7,25 @@ import { Dashboard } from "./components/Dashboard/dashboard";
 import { Credentials } from "./credentials/credentials";
 import "./App.css";
 
-const clientId = "509490d6f8d64997ad8e2eb63fe621c8";
-const clientSecret = "b461cbd67ed64b5699edb74b356f2b9a";
+const getHashParams = () => {
+	const hashParams = {};
+	let e;
+	const r = /([^&;=]+)=?([^&;]*)/g;
+	const q = window.location.hash.substring(1);
+	while ((e = r.exec(q))) {
+		hashParams[e[1]] = decodeURIComponent(e[2]);
+	}
+	return hashParams;
+};
 
 function App() {
 	const [token, setToken] = useState("");
 
-	const accessToken = useAuth();
-	console.log(accessToken)
+	const { error, access_token, refresh_token } = getHashParams();
 
-	return accessToken ? <Dashboard code={accessToken} /> : <div>...</div>;
+	const code = new URLSearchParams(window.location.search).get("code");
+
+	return access_token ? <Dashboard code={access_token} /> : <Login />;
 }
 
 export default App;

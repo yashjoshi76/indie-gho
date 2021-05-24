@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 
 export const useAuth = (code) => {
@@ -8,19 +8,18 @@ export const useAuth = (code) => {
 
 	useEffect(() => {
 		axios
-			.post("http://localhost:3001", {
+			.post("http://localhost:3001/login", {
 				code,
 			})
 			.then((res) => {
-				console.log(res.data);
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
-				// window.history.pushState({}, null, "/");
+				window.history.pushState({}, null, "/");
 			})
-			.catch(() => {
-				// window.loaction = "/";
-			});
+			// .catch(() => {
+			// 	window.location = "/";
+			// });
 	}, [code]);
 
 	useEffect(() => {

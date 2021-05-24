@@ -3,13 +3,13 @@ import { Tracklist } from "./tracklist";
 import "./style.css";
 
 export const Artist = ({ art, tracks }) => {
-	if (art.length === 0) {
+	if (!art) {
 		return null;
 	} else {
 		// console.log(art.tracks[0]);
 
-		const { name } = art.tracks[0].artists[0];
-		const { url } = art.tracks[0].album.images[0];
+		const { name } = art
+		const url = ''
 		// console.log(name);
 
 		return (

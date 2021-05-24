@@ -34,51 +34,36 @@ export const Dashboard = ({ code }) => {
 
 	//recommendations
 	useEffect(() => {
-		spotifyApi
-			.getRecommendations({
-				min_energy: 0.4,
-				seed_artists: ["5INjqkS1o8h1imAzPqGZBb"],
-				min_popularity: 50,
-			})
-			.then(
-				function (data) {
-					let recommendations = data.body;
-					setArtists(recommendations);
-					// setTopArtist(recommendations.tracks[0].artists[0].id);
-
-					spotifyApi
-						.getArtistTopTracks(
-							`${recommendations.tracks[0].artists[0].id}`,
-							"GB"
-						)
-						.then(
-							function (data) {
-								setTopArtist(data.body.tracks);
-							},
-							function (err) {
-								console.log("Something went wrong!", err);
-							}
+		spotifyApi.getArtistRelatedArtists("5INjqkS1o8h1imAzPqGZBb").then(
+			function (data) {
+				// console.log("similar", data.body);
+				setSimilarArts(data.body);
+				spotifyApi.getArtistTopTracks(data.body.artists[0].id, "GB").then(
+					function (data) {
+						setTopArtist(data.body.tracks);
+					},
+					function (err) {
+						console.log("Something went wrong!", err);
+					}
+				);
+				spotifyApi.searchTracks(`artist: [${data.body.artists[0].name}, ${data.body.artists[1].name}, ${data.body.artists[2].name}]`).then(
+					function (data) {
+						console.log(
+							'Search tracks by "Alright" in the track name and "Kendrick Lamar" in the artist name',
+							data.body
 						);
-					spotifyApi
-						.getArtistRelatedArtists(
-							`${recommendations.tracks[0].artists[0].id}`
-						)
-						.then(
-							function (data) {
-								// console.log("similar", data.body);
-								setSimilarArts(data.body);
-							},
-							function (err) {
-								console.log(err);
-							}
-						);
+					},
+					function (err) {
+						console.log("Something went wrong!", err);
+					}
+				);
+			},
+			function (err) {
+				console.log(err);
+			}
+		);
+		// setTopArtist(recommendations.tracks[0].artists[0].id);
 
-					console.log(recommendations);
-				},
-				function (err) {
-					console.log("Something went wrong!", err);
-				}
-			);
 		//userdetails
 
 		//popular playlists in ireland
@@ -97,7 +82,15 @@ export const Dashboard = ({ code }) => {
 					console.log("Something went wrong!", err);
 				}
 			);
+			spotifyApi.getMe()
+  .then(function(data) {
+    console.log('Some information about the authenticated user', data.body);
+  }, function(err) {
+    console.log('Something went wrong!', err);
+  });
 	}, [code]);
+
+	console.log(similarArts);
 
 	return !code ? (
 		<div
@@ -113,20 +106,7 @@ export const Dashboard = ({ code }) => {
 		<div>
 			<Navbar />
 			<div className="about">
-				{!artists ? (
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						sdnsjdns
-					</div>
-				) : (
-					<Artist art={artists} tracks={topArtist} />
-				)}
-
+				<Artist art={similarArts} tracks={topArtist} />
 				<Playlists list={plists} simList={similarArts} />
 				<Doti />
 				{/* <SimilarArts /> */}
