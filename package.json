@@ -1,52 +1,54 @@
 {
-  "name": "songs",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@egjs/flicking-plugins": "^3.3.0",
-    "@egjs/react-flicking": "^3.7.1",
-    "@testing-library/jest-dom": "^5.12.0",
-    "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^12.8.3",
-    "@use-gesture/react": "^10.0.0-beta.7",
-    "axios": "^0.21.1",
-    "lodash": "^4.17.21",
-    "node-sass": "^6.0.0",
-    "nuka-carousel": "^4.7.8",
-    "react": "^17.0.2",
-    "react-awesome-slider": "^4.1.0",
-    "react-dom": "^17.0.2",
-    "react-scripts": "4.0.3",
-    "react-spring": "^9.1.2",
-    "react-spring-3d-carousel": "^1.2.1",
-    "react-tinder-card": "^1.4.0",
-    "react-use-gesture": "^9.1.3",
-    "spotify-web-api-node": "^5.0.2",
-    "uuid": "^8.3.2",
-    "web-vitals": "^1.1.2"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+	"name": "songs",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"@egjs/flicking-plugins": "^3.3.0",
+		"@egjs/react-flicking": "^3.7.1",
+		"@testing-library/jest-dom": "^5.12.0",
+		"@testing-library/react": "^11.2.7",
+		"@testing-library/user-event": "^12.8.3",
+		"@use-gesture/react": "^10.0.0-beta.7",
+		"axios": "^0.21.1",
+		"lodash": "^4.17.21",
+		"node-sass": "^6.0.0",
+		"nuka-carousel": "^4.7.8",
+		"react": "^17.0.2",
+		"react-awesome-slider": "^4.1.0",
+		"react-dom": "^17.0.2",
+		"react-scripts": "4.0.3",
+		"react-spring": "^9.1.2",
+		"react-spring-3d-carousel": "^1.2.1",
+		"react-tinder-card": "^1.4.0",
+		"react-use-gesture": "^9.1.3",
+		"spotify-web-api-js": "^1.5.1",
+		"spotify-web-api-node": "^5.0.2",
+		"uuid": "^8.3.2",
+		"web-vitals": "^1.1.2"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject"
+	},
+	"proxy": "http://localhost:3001",
+	"eslintConfig": {
+		"extends": [
+			"react-app",
+			"react-app/jest"
+		]
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }

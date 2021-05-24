@@ -21,8 +21,6 @@ const spotifyApi = new SpotifyWebApi({
 });
 
 export const Dashboard = ({ code }) => {
-	// console.log(code);
-
 	const [artists, setArtists] = useState([]);
 	const [topArtist, setTopArtist] = useState([]);
 	const [plists, setPlists] = useState([]);
@@ -39,9 +37,7 @@ export const Dashboard = ({ code }) => {
 		spotifyApi
 			.getRecommendations({
 				min_energy: 0.4,
-				seed_artists: [
-					"5INjqkS1o8h1imAzPqGZBb",
-				],
+				seed_artists: ["5INjqkS1o8h1imAzPqGZBb"],
 				min_popularity: 50,
 			})
 			.then(
