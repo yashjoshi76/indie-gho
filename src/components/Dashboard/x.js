@@ -1,152 +1,47 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import SpotifyWebApi from "spotify-web-api-node";
+import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
+import { useSpring, animated as anim } from 'react-spring'
+import './styles.css'
 
-//components
-import { Artist } from "../Artist/artist";
-import { Navbar } from "../Navbar/navbar";
-import { Playlists } from "../Playlists/playlists";
-import { SimilarArts } from "../SimilarArts/similararts";
-import { Footer } from "../Footer/footer";
-import { Doti } from "../Doti/doti";
-import { Login } from "../Login/login";
-import { useAuth } from "../Login/useAuth";
+const fast = { tension: 1200, friction: 40 }
+const slow = { mass: 10, tension: 200, friction: 50 }
+const trans = (x, y) => `translate3d(${x}px,${y}px,0) translate3d(-50%,-50%,0)`
 
-//stylesheet
-import "./style.css";
-
-//clientid
-const spotifyApi = new SpotifyWebApi({
-	clientId: "509490d6f8d64997ad8e2eb63fe621c8",
-});
-
-export const Dashboard = ({ code }) => {
-	// console.log(code);
-
-	const [artists, setArtists] = useState([]);
-	const [topArtist, setTopArtist] = useState([]);
-	const [plists, setPlists] = useState([]);
-	const [similarArts, setSimilarArts] = useState([]);
-
-	//accesstokenrefresh
-	useEffect(() => {
-		if (!code) return;
-		spotifyApi.setAccessToken(code);
-	}, [code]);
-
-	//recommendations
-	useEffect(() => {
-		spotifyApi
-			.getRecommendations({
-				min_energy: 0.4,
-				seed_artists: [
-					"5INjqkS1o8h1imAzPqGZBb",
-					"0epOFNiUfyON9EYx7Tpr6V",
-					"7Ln80lUS6He07XvHI8qqHH",
-					"2Z7UcsdweVlRbAk5wH5fsf",
-				],
-				min_popularity: 50,
-			})
-			.then(
-				function (data) {
-					let recommendations = data.body;
-					setArtists(recommendations);
-					// setTopArtist(recommendations.tracks[0].artists[0].id);
-
-					spotifyApi
-						.getArtistTopTracks(
-							`${recommendations.tracks[0].artists[0].id}`,
-							"GB"
-						)
-						.then(
-							function (data) {
-								setTopArtist(data.body.tracks);
-							},
-							function (err) {
-								console.log("Something went wrong!", err);
-							}
-						);
-					spotifyApi
-						.getArtistRelatedArtists(
-							`${recommendations.tracks[0].artists[0].id}`
-						)
-						.then(
-							function (data) {
-								// console.log("similar", data.body);
-								setSimilarArts(data.body);
-							},
-							function (err) {
-								console.log(err);
-							}
-						);
-
-					console.log(recommendations);
-				},
-				function (err) {
-					console.log("Something went wrong!", err);
-				}
-			);
-		//userdetails
-		spotifyApi.getMe().then(
-			function (data) {
-				console.log("Some information about the authenticated user", data.body);
-			},
-			function (err) {
-				console.log("Something went wrong!", err);
-			}
-		);
-
-		//popular playlists in ireland
-		spotifyApi
-			.getPlaylistsForCategory("indie_alt", {
-				country: "IE",
-				limit: 20,
-				offset: 0,
-			})
-			.then(
-				function (data) {
-					console.log(data.body);
-					setPlists(data.body.playlists);
-				},
-				function (err) {
-					console.log("Something went wrong!", err);
-				}
-			);
-	}, [code]);
-
-	return !code ? (
-		<div
-			style={{
-				display: "flex",
-				justifyContent: "center",
-				alignItems: "center",
-			}}
-		>
-			sdsdns
-		</div>
-	) : (
-		<div>
-			<Navbar />
-			<div className="about">
-				{!artists ? (
-					<div
-						style={{
-							display: "flex",
-							justifyContent: "center",
-							alignItems: "center",
-						}}
-					>
-						sdnsjdns
-					</div>
-				) : (
-					<Artist art={artists} tracks={topArtist} />
-				)}
-
-				<Playlists list={plists} simList={similarArts} />
-				<Doti />
-				{/* <SimilarArts /> */}
-			</div>
-			<Footer />
-		</div>
-	);
-};
+export default function Goo() {
+  // Here we form a natural trail, one spring following another.
+  // You can either update springs by overwriting values when you re-render the component.
+  // Or you can use the set function, which allows you to bypass React alltogether.
+  // We're dealing with mouse-input here so we choose the latter in order to prevent rendering.
+  const [{ pos1 }, set] = useSpring({ pos1: [0, 0], config: fast })
+  const [{ pos2 }] = useSpring({ pos2: pos1, config: slow })
+  const [{ pos3 }] = useSpring({ pos3: pos2, config: slow })
+  // Effect for fetching mouse coordinates
+  useEffect(() => {
+    // "set" updates the first spring, the other springs are bound and will follow.
+    // It won't cause a new render pass and the animated values down in the view
+    // will still naturally reflect animated changes.
+    const handler = ({ clientX, clientY }) => set({ pos1: [clientX, clientY] })
+    window.addEventListener('mousemove', handler)
+    return () => window.removeEventListener('mousemove', handler)
+  }, [])
+  // We render the view like always, but we're using animated.el whereever
+  // animated values are being used. Just like with regular "native" springs this
+  // makes elements transient.
+  return (
+    <>
+      <svg style={{ position: 'absolute', width: 0, height: 0 }}>
+        <filter id="goo">
+          <feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="30" />
+          <feColorMatrix in="blur" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 30 -7" />
+        </filter>
+      </svg>
+      <div class="hooks-main">
+        <div class="hooks-filter">
+          <anim.div class="b1" style={{ transform: pos3.interpolate(trans) }} />
+          <anim.div class="b2" style={{ transform: pos2.interpolate(trans) }} />
+          <anim.div class="b3" style={{ transform: pos1.interpolate(trans) }} />
+        </div>
+      </div>
+    </>
+  )
+}

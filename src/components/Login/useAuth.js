@@ -6,9 +6,11 @@ export const useAuth = (code) => {
 	const [refreshToken, setRefreshToken] = useState();
 	const [expiresIn, setExpiresIn] = useState();
 
+	const url = process.env.PORT || 3001;
+
 	useEffect(() => {
 		axios
-			.post("http://localhost:3001", {
+			.post("/login", {
 				code,
 			})
 			.then((res) => {
@@ -16,7 +18,7 @@ export const useAuth = (code) => {
 				setAccessToken(res.data.accessToken);
 				setRefreshToken(res.data.refreshToken);
 				setExpiresIn(res.data.expiresIn);
-				// window.history.pushState({}, null, "/");
+				window.history.pushState({}, null, "/");
 			})
 			.catch(() => {
 				// window.loaction = "/";
@@ -27,7 +29,7 @@ export const useAuth = (code) => {
 		if (!refreshToken || !expiresIn) return;
 		const interval = setInterval(() => {
 			axios
-				.post("http://localhost:3001/refresh", {
+				.post("/refresh", {
 					refreshToken,
 				})
 				.then((res) => {

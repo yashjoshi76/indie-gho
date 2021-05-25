@@ -13,10 +13,11 @@ const clientSecret = "b461cbd67ed64b5699edb74b356f2b9a";
 function App() {
 	const [token, setToken] = useState("");
 
-	const accessToken = useAuth();
-	console.log(accessToken)
+	const code = new URLSearchParams(window.location.search).get("code");
+	const accessToken = useAuth(code);
+	console.log(accessToken);
 
-	return accessToken ? <Dashboard code={accessToken} /> : <div>...</div>;
+	return accessToken ? <Dashboard code={accessToken} /> : <Login />;
 }
 
 export default App;
