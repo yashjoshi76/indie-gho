@@ -9,19 +9,32 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+let REDIRECT_URI = process.env.REDIRECT_URI || "http://localhost:3001";
+let FRONTEND_URI = process.env.FRONTEND_URI || "http://localhost:3000";
+const PORT = process.env.PORT || 3001;
+
+if (process.env.NODE_ENV !== "production") {
+	REDIRECT_URI = "http://localhost:3001";
+	FRONTEND_URI = "http://localhost:3000";
+}
+
 console.log(process.env.REDIRECT_URI);
 
-app.listen(process.env.PORT || 3001, () => {
-	console.log("listening...");
+const port = "3001";
+app.listen(PORT, () => {
+	console.log("listening..", port);
 });
 
-if (process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'staging') {
-    app.use(express.static(path.join(__dirname, 'client/build')));
+if (
+	process.env.NODE_ENV === "production" ||
+	process.env.NODE_ENV === "staging"
+) {
+	app.use(express.static(path.join(__dirname, "client/build")));
 
-    app.get('*', function (req, res) {
-        res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-    });
-};
+	app.get("*", function (req, res) {
+		res.sendFile(path.join(__dirname, "client/build", "index.html"));
+	});
+}
 
 app.post("/refresh", (req, res) => {
 	const refreshToken = req.body.refreshToken;
@@ -47,7 +60,7 @@ app.post("/refresh", (req, res) => {
 		});
 });
 
-app.post("/login", (req, res) => {
+app.post("/login", cors(), async (req, res) => {
 	const code = req.body.code;
 	const spotifyApi = new SpotifyWebApi({
 		redirectUri: process.env.REDIRECT_URI,
