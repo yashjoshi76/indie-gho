@@ -1,0 +1,50 @@
+.login {
+	display: flex;
+	flex-direction: row;
+	height: 100vh;
+	background: black;
+	color: white;
+	justify-content: left;
+	align-items: center;
+}
+
+.login-img {
+	height: 600px;
+	margin-left: 100px;
+}
+.login-content {
+	width: 60%;
+}
+.doti {
+	padding: 50px;
+	font-size: 40px;
+	font-family: monospace;
+	text-align: center;
+}
+.login-a {
+	padding: 20px;
+	font-size: 20px;
+	border-radius: 99px;
+	font-family: monospace;
+	font-weight: 600;
+	color: white;
+	text-decoration: none;
+	background-color: #1db954;
+}
+
+@media only screen and (max-width: 600px) {
+	.login {
+		display: flex;
+		overflow: hidden;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	.login-content {
+		width: 100%;
+	}
+	.login-img {
+		margin-left: 0px;
+		height: auto;
+	}
+}

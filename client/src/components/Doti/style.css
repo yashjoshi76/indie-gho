@@ -1,0 +1,82 @@
+.about-doti {
+	display: flex;
+	margin: 100px 0px 100px 0px;
+}
+.doti-intro {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+.doti-tagline {
+	text-align: center;
+	font-size: 30px;
+}
+
+#doti-name {
+	font-size: 20px;
+	font-weight: 500;
+	background: black;
+	color: white;
+	width: 20rem;
+	text-align: center;
+	padding: 10px;
+	text-transform: uppercase;
+	margin-top: 10px;
+	border-radius: 3px;
+}
+.doti-all-about {
+	width: 100%;
+	margin-top: 100px;
+}
+.doti-heading {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.intro-text {
+	text-align: center;
+	margin-top: 10px;
+	width: 90%;
+	font-size: 24px;
+	padding: 20px;
+}
+.doti-img-div {
+	width: 90%;
+}
+
+.about-doti-text {
+	font-size: 60px;
+	text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+	.doti-intro {
+	}
+	
+	.about-doti {
+		padding: 0px !important;
+		margin: 0px;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+	.doti-tagline {
+		text-align: center;
+	}
+	.doti-intro {
+		margin: 0px;
+		display: flex;
+		flex-direction: column;
+	}
+	.doti-img-div {
+		width: 100%;
+	}
+	.intro-text {
+		text-align: center;
+		margin-top: 20px;
+		padding: 0px;
+		width: 100%;
+		font-size: 15px;
+	}
+}

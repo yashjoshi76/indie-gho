@@ -1,5 +1,4 @@
 require("dotenv").config();
-const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const SpotifyWebApi = require("spotify-web-api-node");
@@ -9,47 +8,20 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-let REDIRECT_URI = process.env.REDIRECT_URI || "http://localhost:3001";
-let FRONTEND_URI = process.env.FRONTEND_URI || "http://localhost:3000";
-const PORT = process.env.PORT || 3001;
-
-if (process.env.NODE_ENV !== "production") {
-	REDIRECT_URI = "http://localhost:3001";
-	FRONTEND_URI = "http://localhost:3000";
-}
-
-console.log(process.env.REDIRECT_URI);
-
-const port = "3001";
-app.listen(PORT, () => {
-	console.log("listening..", port);
-});
-
-if (
-	process.env.NODE_ENV === "production" ||
-	process.env.NODE_ENV === "staging"
-) {
-	app.use(express.static(path.join(__dirname, "client/build")));
-
-	app.get("*", function (req, res) {
-		res.sendFile(path.join(__dirname, "client/build", "index.html"));
-	});
-}
+app.listen(3001, console.log("listening"));
 
 app.post("/refresh", (req, res) => {
 	const refreshToken = req.body.refreshToken;
-	console.log("token is", refreshToken);
 	const spotifyApi = new SpotifyWebApi({
 		redirectUri: process.env.REDIRECT_URI,
 		clientId: process.env.CLIENT_ID,
 		clientSecret: process.env.CLIENT_SECRET,
 		refreshToken,
 	});
+
 	spotifyApi
 		.refreshAccessToken()
 		.then((data) => {
-			console.log("refreshed!");
-			console.log(data.body);
 			res.json({
 				accessToken: data.body.accessToken,
 				expiresIn: data.body.expiresIn,
@@ -57,10 +29,30 @@ app.post("/refresh", (req, res) => {
 		})
 		.catch((err) => {
 			console.log(err);
+			res.sendStatus(400);
 		});
 });
 
-app.post("/login", cors(), async (req, res) => {
+app.get("/log", cors(), (req, res) => {
+	var scopes = ["user-read-private", "user-read-email"],
+		redirectUri = "http://localhost:3000",
+		clientId = process.env.CLIENT_ID;
+	state = process.env.CLIENT_SECRET;
+
+	// Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
+	var spotifyApi = new SpotifyWebApi({
+		redirectUri: redirectUri,
+		clientId: clientId,
+	});
+
+	// Create the authorization URL
+	var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
+
+	// https://accounts.spotify.com:443/authorize?client_id=5fe01282e44241328a84e7c5cc169165&response_type=code&redirect_uri=https://example.com/callback&scope=user-read-private%20user-read-email&state=some-state-of-my-choice
+	console.log(authorizeURL);
+});
+
+app.post("/login", cors(), (req, res) => {
 	const code = req.body.code;
 	const spotifyApi = new SpotifyWebApi({
 		redirectUri: process.env.REDIRECT_URI,
@@ -71,7 +63,6 @@ app.post("/login", cors(), async (req, res) => {
 	spotifyApi
 		.authorizationCodeGrant(code)
 		.then((data) => {
-			console.log(data);
 			res.json({
 				accessToken: data.body.access_token,
 				refreshToken: data.body.refresh_token,
@@ -82,28 +73,3 @@ app.post("/login", cors(), async (req, res) => {
 			res.sendStatus(400);
 		});
 });
-
-//client flow
-// app.post("/", (req, res) => {
-// 	const code = req.body.code;
-
-// 	const spotifyApi = new SpotifyWebApi({
-// 		redirectUri: process.env.REDIRECT_URI,
-// 		clientId: process.env.CLIENT_ID,
-// 		clientSecret: process.env.CLIENT_SECRET,
-// 	});
-// 	spotifyApi.clientCredentialsGrant().then(
-// 		function (data) {
-// 			console.log(data);
-// 			res.json({
-// 				accessToken: data.body.access_token,
-// 				refreshToken: data.body.refresh_token,
-// 				expiresIn: data.body.expires_in,
-// 			});
-// 		},
-// 		function (err) {
-// 			console.log("Something went wrong when retrieving an access token", err);
-// 		}
-// 	);
-// });
-// Retrieve an access token.
