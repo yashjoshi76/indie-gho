@@ -2,30 +2,37 @@ import React, { useEffect } from "react";
 import { Tracklist } from "./tracklist";
 import "./style.css";
 
-export const Artist = ({ art, tracks }) => {
-	if (!art) {
+export const Artist = ({ art, tracks, user }) => {
+	if (art.length === 0 || user.length === 0 || !tracks) {
 		return null;
 	} else {
-		// console.log(art.tracks[0]);
+		// console.log(art[0].artists[0].name);
 
-		const { name } = art;
-		const url = "";
+		const name = "";
+		const { display_name } = user;
+		if (user.length === 0) {
+			return null;
+		}
+
 		// console.log(name);
 
 		return (
 			<div className="spotify-artist">
 				<div className="artist">
 					<div>
-						<img
-							className="art-image"
-							src="https://i.scdn.co/image/7ef090f59f17dc031c68dc937ae472bfd233a986"
-							alt="song"
-						/>
+						<img className="art-image" src={user.images[0].url} alt="song" />
 					</div>
 
 					<div className="art-name">
-						Listen to best tracks of: <br />
-						{name}
+						<div style={{ marginBottom: "10px", fontSize: "20px" }}>
+							Greetings <br />
+							{display_name}!
+							<br />
+						</div>
+						<div style={{ fontSize: "30px" }}>
+							Listen to best tracks of: <br />
+							{art[0].artists[0].name}
+						</div>
 					</div>
 					{/* <div>Suggested by DOTI</div> */}
 				</div>

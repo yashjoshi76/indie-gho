@@ -34,7 +34,7 @@ export const Tracklist = ({ list, name }) => {
 			style={{ width: "500px", height: "300px", margin: "0px 0px 30px 0px;" }}
 			cssModule={AwesomeSliderStyles}
 			animation="openAnimation"
-			play={true}
+			play={false}
 		>
 			{list.slice(0, 6).map((x) => {
 				return (

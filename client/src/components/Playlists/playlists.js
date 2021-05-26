@@ -16,7 +16,7 @@ export const Playlists = ({ list, simList }) => {
 
 	const { items } = list;
 	const { artists } = simList;
-	console.log(artists);
+
 	// console.log(items);
 
 	// let slides = items.map((obj, index) => ({

@@ -9,22 +9,13 @@ export const Navbar = () => {
 
 	return (
 		<nav className="navbar">
-			{/* <div className="logo">
-				<div className="header text">
-					<span className="doti">doti</span>
-					<div>
-						<img alt="owl" src={Ghost} />
-					</div>{" "}
-				</div>
-			</div> */}
-
 			<div id="text">
-				{" "}
-				INDIGHO{" "}
+				INDIGHO
 				<div style={{ display: "contents" }}>
-					<img alt="owl" src={Ghost} />
+					<img style={{ height: "40px" }} alt="owl" src={Ghost} />
 				</div>{" "}
 			</div>
+			<div className="user"></div>
 		</nav>
 	);
 };

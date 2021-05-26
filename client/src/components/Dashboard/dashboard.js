@@ -35,7 +35,8 @@ const getRandomArtist = () => {
 export const Dashboard = ({ code }) => {
 	const [artists, setArtists] = useState([]);
 	const [tracks, setTracks] = useState([]);
-	const [topArtist, setTopArtist] = useState([]);
+	const [user, setUser] = useState([]);
+	const [topTracks, setTopTracks] = useState([]);
 	const [plists, setPlists] = useState([]);
 	const [similarArts, setSimilarArts] = useState([]);
 
@@ -51,19 +52,6 @@ export const Dashboard = ({ code }) => {
 			function (data) {
 				// console.log("similar", data.body);
 				setSimilarArts(data.body);
-
-				spotifyApi
-					.searchTracks(
-						`artist: [${data.body.artists[0].name}, ${data.body.artists[1].name}, ${data.body.artists[2].name}]`
-					)
-					.then(
-						function (data) {
-							console.log("data", data);
-						},
-						function (err) {
-							console.log("Something went wrong!", err);
-						}
-					);
 			},
 			function (err) {
 				console.log(err);
@@ -77,11 +65,13 @@ export const Dashboard = ({ code }) => {
 			.then(
 				function (data) {
 					console.log("recs", data.body.tracks[0].artists[0].id);
+					setArtists(data.body.tracks);
+
 					spotifyApi
 						.getArtistTopTracks(data.body.tracks[0].artists[0].id, "GB")
 						.then(
 							function (data) {
-								setTopArtist(data.body.tracks);
+								setTopTracks(data.body.tracks);
 							},
 							function (err) {
 								// console.log("Something went wrong!", err);
@@ -92,9 +82,6 @@ export const Dashboard = ({ code }) => {
 					// console.log("Something went wrong!", err);
 				}
 			);
-		// setTopArtist(recommendations.tracks[0].artists[0].id);
-
-		//userdetails
 
 		//popular playlists in ireland
 		spotifyApi
@@ -114,7 +101,8 @@ export const Dashboard = ({ code }) => {
 			);
 		spotifyApi.getMe().then(
 			function (data) {
-				console.log("Some information about the authenticated user", data.body);
+				// console.log("Some information about the authenticated user", data.body);
+				setUser(data.body);
 			},
 			function (err) {
 				console.log("Something went wrong!", err);
@@ -130,13 +118,13 @@ export const Dashboard = ({ code }) => {
 				alignItems: "center",
 			}}
 		>
-			sdsdns
+		Already logged in!
 		</div>
 	) : (
 		<div>
 			<Navbar />
 			<div className="about">
-				<Artist art={similarArts} tracks={topArtist} />
+				<Artist art={artists} tracks={topTracks} user={user} />
 				<Playlists list={plists} simList={similarArts} />
 				<Doti />
 				<SimilarArts />
