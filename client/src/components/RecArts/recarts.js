@@ -16,7 +16,7 @@ function Stack({ image, background, url }) {
 	);
 
 	const openSpotify = (url) => {
-		console.log("x", url);
+		// console.log("x", url);
 		window.open(url, "_blank");
 	};
 

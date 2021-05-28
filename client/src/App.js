@@ -16,7 +16,6 @@ function App() {
 		if (_token) {
 			setToken(_token);
 			window.sessionStorage.setItem("x", _token);
-			window.sessionStorage.removeItem("mytime");
 		}
 
 		console.log("token", token);

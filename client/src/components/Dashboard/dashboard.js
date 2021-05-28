@@ -5,7 +5,7 @@ import SpotifyWebApi from "spotify-web-api-node";
 import { Artist } from "../Artist/artist";
 import { Navbar } from "../Navbar/navbar";
 import { Playlists } from "../Playlists/playlists";
-import { SimilarArts } from "../SimilarArts/similararts";
+import { InstaList } from "../Instagram/instalist";
 import { Footer } from "../Footer/footer";
 import { Doti } from "../Doti/doti";
 
@@ -17,24 +17,14 @@ const spotifyApi = new SpotifyWebApi({
 	clientId: "509490d6f8d64997ad8e2eb63fe621c8",
 });
 
-const getRandomArtist = () => {
-	const list = [
-		"2Z7UcsdweVlRbAk5wH5fsf",
-		"4X42BfuhWCAZ2swiVze9O0",
-		"4lrBMUSk8PiNnCEZfsmPAk",
-		"5INjqkS1o8h1imAzPqGZBb",
-		"5NXHXK6hOCotCF8lvGM1I0",
-		"37i9dQZF1DX1A0PcRHdJVf",
-		"1uAQR5uku7pQGEiaG7VqiE",
-	];
-
-	const random = Math.floor(Math.random() * list.length);
-	return list[random];
+const randomSuggest = (items) => {
+	// const random = Math.floor(Math.random() * items.length);
+	const random = Math.floor(Math.random() * items.length);
+	return random;
 };
 
 export const Dashboard = ({ code }) => {
 	const [artists, setArtists] = useState([]);
-	const [tracks, setTracks] = useState([]);
 	const [user, setUser] = useState([]);
 	const [topTracks, setTopTracks] = useState([]);
 	const [plists, setPlists] = useState([]);
@@ -48,33 +38,43 @@ export const Dashboard = ({ code }) => {
 
 	//recommendations
 	useEffect(() => {
-		spotifyApi.getArtistRelatedArtists(getRandomArtist()).then(
-			function (data) {
-				// console.log("similar", data.body);
-				setSimilarArts(data.body);
-			},
-			function (err) {
-				console.log(err);
-			}
-		);
 		spotifyApi
 			.getRecommendations({
 				min_energy: 0.4,
-				seed_artists: ["5NXHXK6hOCotCF8lvGM1I0"],
+				seed_artists: [
+					"4Z8W4fKeB5YxbusRsdQVPb", //radiohead
+					"5NXHXK6hOCotCF8lvGM1I0", //porcupinetree
+					"37i9dQZF1DX1A0PcRHdJVf", //arcticmonkeys
+					"6ft7JnxMyZhp7N52qzHymY", //vansire
+					"1QAJqy2dA3ihHBFIHRphZj", //cigsaftersex
+				],
 			})
 			.then(
 				function (data) {
-					console.log("recs", data.body.tracks[0].artists[0].id);
+					const rand = randomSuggest(data.body.tracks);
+					// console.log("recs", data.body.tracks[rand].artists[rand].id);
 					setArtists(data.body.tracks);
 
 					spotifyApi
-						.getArtistTopTracks(data.body.tracks[0].artists[0].id, "GB")
+						.getArtistTopTracks(data.body.tracks[rand].artists[0].id, "GB")
 						.then(
 							function (data) {
 								setTopTracks(data.body.tracks);
 							},
 							function (err) {
 								// console.log("Something went wrong!", err);
+							}
+						);
+
+					spotifyApi
+						.getArtistRelatedArtists(data.body.tracks[rand].artists[0].id)
+						.then(
+							function (data) {
+								// console.log("similar", data.body);
+								setSimilarArts(data.body);
+							},
+							function (err) {
+								console.log(err);
 							}
 						);
 				},
@@ -118,16 +118,16 @@ export const Dashboard = ({ code }) => {
 				alignItems: "center",
 			}}
 		>
-		Already logged in!
+			Already logged in!
 		</div>
 	) : (
-		<div>
+		<div className="dashboard">
 			<Navbar />
 			<div className="about">
 				<Artist art={artists} tracks={topTracks} user={user} />
 				<Playlists list={plists} simList={similarArts} />
 				<Doti />
-				<SimilarArts />
+				<InstaList />
 			</div>
 			<Footer />
 		</div>

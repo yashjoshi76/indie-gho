@@ -1,5 +1,5 @@
 .navbar {
-	height: 150px;
+	height: 80px;
 	width: 100%;
 	overflow-x: hidden;
 	overflow-y: auto;
@@ -23,6 +23,8 @@
 }
 #text {
 	font-size: 2rem;
+	color: white;
+	font-family: monospace;
 }
 
 .header {

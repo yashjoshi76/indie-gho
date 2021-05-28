@@ -80,7 +80,7 @@ export const Dashboard = ({ code }) => {
 							}
 						);
 
-					console.log(recommendations);
+					// console.log(recommendations);
 				},
 				function (err) {
 					console.log("Something went wrong!", err);
@@ -105,7 +105,7 @@ export const Dashboard = ({ code }) => {
 			})
 			.then(
 				function (data) {
-					console.log(data.body);
+					// console.log(data.body);
 					setPlists(data.body.playlists);
 				},
 				function (err) {

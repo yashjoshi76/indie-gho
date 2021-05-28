@@ -1,17 +1,20 @@
 import React, { useEffect } from "react";
+import {Skeleton} from './skeleton';
 import { Tracklist } from "./tracklist";
 import "./style.css";
 
 export const Artist = ({ art, tracks, user }) => {
-	if (art.length === 0 || user.length === 0 || !tracks) {
-		return null;
+	if (art.length === 0 || user.length === 0 || tracks.length === 0) {
+		return <Skeleton />
 	} else {
 		// console.log(art[0].artists[0].name);
-
-		const name = "";
+		if (tracks.length === 0) {
+			return null;
+		}
+		const { name } = tracks[0].artists[0];
 		const { display_name } = user;
 		if (user.length === 0) {
-			return null;
+			return <Skeleton />
 		}
 
 		// console.log(name);
@@ -19,30 +22,27 @@ export const Artist = ({ art, tracks, user }) => {
 		return (
 			<div className="spotify-artist">
 				<div className="artist">
-					<div>
-						<img className="art-image" src={user.images[0].url} alt="song" />
-					</div>
-
-					<div className="art-name">
-						<div style={{ marginBottom: "10px", fontSize: "20px" }}>
+					<div className="user-details">
+						<div
+							className="art-image"
+							style={{
+								backgroundImage: `url(${user.images[0].url})`,
+								backgroundPosition: "center",
+							}}
+						></div>
+						<div id="greet">
 							Greetings <br />
 							{display_name}!
 							<br />
 						</div>
-						<div style={{ fontSize: "30px" }}>
-							Listen to best tracks of: <br />
-							{art[0].artists[0].name}
-						</div>
 					</div>
-					{/* <div>Suggested by DOTI</div> */}
+
+					<div className="desc-indi">
+						Use IndiGho to discover awesome music!
+					</div>
 				</div>
 
 				<Tracklist list={tracks} name={name} />
-
-				<div>
-					{/* <div className="indie-text">Day of the Indie</div>
-					<div className="indie-desc">Discover new Indie music everyday</div> */}
-				</div>
 			</div>
 		);
 	}

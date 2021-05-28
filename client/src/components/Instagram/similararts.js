@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Carousel from "react-spring-3d-carousel";
 import { config } from "react-spring";
 
-import Groove from "../../images/groove.svg";
+
 import "./style.css";
 
 export const SimilarArts = (artists) => {
@@ -148,9 +148,7 @@ export const SimilarArts = (artists) => {
 					/>
 				</div>
 			</div>
-			<div>
-				<img alt="groove" className="groove-img" src={Groove} />
-			</div>
+			
 		</div>
 	);
 };

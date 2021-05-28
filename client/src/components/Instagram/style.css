@@ -1,6 +1,7 @@
 .sim-layout {
 	display: flex;
 	flex-direction: row;
+	align-items: center;
 }
 .similar-arts {
 	margin-top: 50px;

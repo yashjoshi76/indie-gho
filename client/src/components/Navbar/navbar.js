@@ -15,7 +15,7 @@ export const Navbar = () => {
 					<img style={{ height: "40px" }} alt="owl" src={Ghost} />
 				</div>{" "}
 			</div>
-			<div className="user"></div>
+			{/* <div className="user"></div> */}
 		</nav>
 	);
 };
