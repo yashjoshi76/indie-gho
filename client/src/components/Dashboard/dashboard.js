@@ -45,7 +45,7 @@ export const Dashboard = ({ code }) => {
 					"4Z8W4fKeB5YxbusRsdQVPb", //radiohead
 					"5NXHXK6hOCotCF8lvGM1I0", //porcupinetree
 					"37i9dQZF1DX1A0PcRHdJVf", //arcticmonkeys
-					"6ft7JnxMyZhp7N52qzHymY", //vansire
+					// "6ft7JnxMyZhp7N52qzHymY", //vansire
 					"1QAJqy2dA3ihHBFIHRphZj", //cigsaftersex
 				],
 			})

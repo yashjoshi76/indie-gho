@@ -1,6 +1,6 @@
 export const authEndpoint = "https://accounts.spotify.com/authorize";
-// const redirectUri = "https://doti-ghoul.web.app/"
-const redirectUri = "http://localhost:3000";
+const redirectUri = "https://doti-ghoul.web.app/"
+// const redirectUri = "http://localhost:3000";
 const clientId = "509490d6f8d64997ad8e2eb63fe621c8";
 
 const scopes = [
