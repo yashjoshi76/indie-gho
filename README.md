@@ -1,15 +1,13 @@
 
 
-DOTI is an acronym for 'Day of the Indie'.
+IndiGho is an acronym for 'Indie Ghoul'.
 
 It exists as a genre specific music recommednation web app built using React Js and css for styling.
-
-WIP: Spotify API integration
 
 To run on local server:
 
 Clone the repo
--> cd doti-day-of-the-indie
+-> cd indie-gho/client
 -> npm i
 -> npm start
 
