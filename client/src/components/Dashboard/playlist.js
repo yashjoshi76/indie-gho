@@ -1,4 +1,4 @@
-const Playlist = {
+export const Playlist = {
 	playlists: {
 		href: "https://api.spotify.com/v1/browse/categories/indie_alt/playlists?country=IE&offset=0&limit=20",
 		items: [
@@ -761,4 +761,4 @@ const Playlist = {
 	},
 };
 
-export default Playlist;
+

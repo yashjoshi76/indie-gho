@@ -59,20 +59,29 @@ function Stack({ image, background, url }) {
 
 export const Recarts = ({ list }) => {
 	if (!list) {
-		return null;
+		return <div>....</div>;
 	}
 
 	return (
 		<div className="rec-arts">
 			<div class="main">
 				{list.slice(0, 9).map((x) => {
-					return (
-						<Stack
-							url={x.external_urls.spotify}
-							image={x.images[0].url}
-							background="#52649e"
-						/>
-					);
+					if (x.images.length === 0) {
+						return (
+							<Stack
+								url={x.external_urls.spotify}
+								image=""
+								background="#52649e"
+							/>
+						);
+					} else
+						return (
+							<Stack
+								url={x.external_urls.spotify}
+								image={x.images[0].url}
+								background="#52649e"
+							/>
+						);
 				})}
 			</div>
 		</div>

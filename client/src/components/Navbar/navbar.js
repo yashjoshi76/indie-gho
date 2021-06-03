@@ -6,6 +6,10 @@ export const Navbar = () => {
 	function handleClick() {
 		window.location.reload();
 	}
+	// const LogOut = () => {
+	// 	console.log('x')
+	// 	window.sessionStorage.removeItem("x");
+	// };
 
 	return (
 		<nav className="navbar">
@@ -15,7 +19,7 @@ export const Navbar = () => {
 					<img style={{ height: "40px" }} alt="owl" src={Ghost} />
 				</div>{" "}
 			</div>
-			{/* <div className="user"></div> */}
+			{/* <div onClick={() => LogOut()}>Logout</div> */}
 		</nav>
 	);
 };

@@ -20,6 +20,12 @@ export const Doti = () => {
 				<div className="intro-text">
 					<Desc />
 				</div>
+				<div className="about-indie">
+					Alternative rock is a category of rock music that emerged from the
+					independent music underground of the 1970s and became widely popular
+					in the 1990s. "Alternative" refers to the genre's distinction from
+					mainstream or commercial rock or pop music
+				</div>
 			</div>
 			<div className="doti-img-div">
 				<img className="doti-img" src={DIcon} alt="indie rock" />

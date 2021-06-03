@@ -11,7 +11,13 @@
 }
 .footer-text {
 	font-size: 20px;
-	
+}
+
+.social-icon {
+	height: 40px;
+	cursor: pointer;
+	width: 40px;
+	padding: 0px 10px 0px 10px;
 }
 
 .footer-header {

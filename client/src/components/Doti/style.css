@@ -37,7 +37,7 @@
 	text-align: center;
 	margin-top: 10px;
 	width: 90%;
-	font-size: 24px;
+	font-size: 40px;
 	padding: 20px;
 }
 .doti-img-div {
@@ -48,9 +48,16 @@
 	font-size: 60px;
 	text-align: center;
 }
+.about-indie {
+	font-size: 30px;
+	text-align: center;
+}
 
 @media only screen and (max-width: 600px) {
-	.doti-intro {
+	.about-indie {
+		margin-top: 10px;
+		text-align: center;
+		font-size: 20px;
 	}
 
 	.about-doti {
@@ -77,7 +84,7 @@
 		width: 300px;
 		font-size: 25px;
 		width: 300px;
-		height: 150px;
+		height: 50px;
 		padding: 5px;
 	}
 }

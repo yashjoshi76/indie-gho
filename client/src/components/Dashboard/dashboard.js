@@ -9,12 +9,14 @@ import { InstaList } from "../Instagram/instalist";
 import { Footer } from "../Footer/footer";
 import { Doti } from "../Doti/doti";
 
+import { Recoms } from "./recoms/recoms";
+
 //stylesheet
 import "./style.css";
 
 //clientid
 const spotifyApi = new SpotifyWebApi({
-	clientId: "509490d6f8d64997ad8e2eb63fe621c8",
+	clientId: "b80dd597528a4b68a17f948cfff4a1aa",
 });
 
 const randomSuggest = (items) => {
@@ -23,11 +25,11 @@ const randomSuggest = (items) => {
 	return random;
 };
 
-export const Dashboard = ({ code }) => {
+export const Dashboard = ({ code, user, plists }) => {
 	const [artists, setArtists] = useState([]);
-	const [user, setUser] = useState([]);
+
 	const [topTracks, setTopTracks] = useState([]);
-	const [plists, setPlists] = useState([]);
+
 	const [similarArts, setSimilarArts] = useState([]);
 
 	//accesstokenrefresh
@@ -38,74 +40,26 @@ export const Dashboard = ({ code }) => {
 
 	//recommendations
 	useEffect(() => {
-		spotifyApi
-			.getRecommendations({
-				min_energy: 0.4,
-				seed_artists: [
-					"4Z8W4fKeB5YxbusRsdQVPb", //radiohead
-					"5NXHXK6hOCotCF8lvGM1I0", //porcupinetree
-					"37i9dQZF1DX1A0PcRHdJVf", //arcticmonkeys
-					// "6ft7JnxMyZhp7N52qzHymY", //vansire
-					"1QAJqy2dA3ihHBFIHRphZj", //cigsaftersex
-				],
-			})
-			.then(
-				function (data) {
-					const rand = randomSuggest(data.body.tracks);
-					// console.log("recs", data.body.tracks[rand].artists[rand].id);
-					setArtists(data.body.tracks);
+		const rand = randomSuggest(Recoms.tracks);
+		// console.log("recs", data.body.tracks[rand].artists[rand].id);
+		setArtists(Recoms.tracks);
 
-					spotifyApi
-						.getArtistTopTracks(data.body.tracks[rand].artists[0].id, "GB")
-						.then(
-							function (data) {
-								setTopTracks(data.body.tracks);
-							},
-							function (err) {
-								// console.log("Something went wrong!", err);
-							}
-						);
-
-					spotifyApi
-						.getArtistRelatedArtists(data.body.tracks[rand].artists[0].id)
-						.then(
-							function (data) {
-								// console.log("similar", data.body);
-								setSimilarArts(data.body);
-							},
-							function (err) {
-								console.log(err);
-							}
-						);
-				},
-				function (err) {
-					// console.log("Something went wrong!", err);
-				}
-			);
-
-		//popular playlists in ireland
-		spotifyApi
-			.getPlaylistsForCategory("indie_alt", {
-				country: "IE",
-				limit: 20,
-				offset: 0,
-			})
-			.then(
-				function (data) {
-					// console.log(data.body);
-					setPlists(data.body.playlists);
-				},
-				function (err) {
-					console.log("Something went wrong!", err);
-				}
-			);
-		spotifyApi.getMe().then(
+		spotifyApi.getArtistTopTracks(Recoms.tracks[rand].artists[0].id, "GB").then(
 			function (data) {
-				// console.log("Some information about the authenticated user", data.body);
-				setUser(data.body);
+				setTopTracks(data.body.tracks);
 			},
 			function (err) {
-				console.log("Something went wrong!", err);
+				// console.log("Something went wrong!", err);
+			}
+		);
+
+		spotifyApi.getArtistRelatedArtists(Recoms.tracks[rand].artists[0].id).then(
+			function (data) {
+				// console.log("similar", data.body);
+				setSimilarArts(data.body);
+			},
+			function (err) {
+				console.log(err);
 			}
 		);
 	}, [code]);
@@ -121,7 +75,7 @@ export const Dashboard = ({ code }) => {
 			Already logged in!
 		</div>
 	) : (
-		<div className="dashboard">
+		<div>
 			<Navbar />
 			<div className="about">
 				<Artist art={artists} tracks={topTracks} user={user} />
