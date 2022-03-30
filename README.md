@@ -2,6 +2,8 @@
 
 IndiGho is an acronym for 'Indie Ghoul'.
 
+https://indie-gho.web.app/
+
 It exists as a genre specific music recommednation web app built using React Js and css for styling.
 
 To run on local server:
